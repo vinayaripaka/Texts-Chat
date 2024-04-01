@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route,useLocation } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ChatsPage from './pages/ChatsPage';
+import './App.css'
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('');
+  const location=useLocation();
+  useEffect(()=>{
+    setCurrentPage(location.pathname);
+  },[location.pathname]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={currentPage === '/chats' ? 'App1' : 'App'}>
+      <Routes>
+        <Route
+          path='/'
+          element={<HomePage />}
+        />
+        <Route
+          path='/chats'
+          element={<ChatsPage />}
+        />
+      </Routes>
     </div>
   );
 }
